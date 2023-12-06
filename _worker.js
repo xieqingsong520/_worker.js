@@ -1,10 +1,12 @@
-addEventListener(
-"fetch",event => {
-let url=new URL(event.request.url);
+export default {
+async fetch(request, env) {
+let url = new URL(request.url);
+if (url.pathname.startsWith('/')) {
+// 修改下方的example.com为自己的节点ip/域名
 url.hostname="qingsong-65jj0tsv.b4a.run";
-let request=new Request(url,event.request);
-event. respondWith(
- fetch(request)
-  )
-  	}
-   )
+let new_request=new Request(url,request);
+return fetch(new_request);
+}
+return env.ASSETS.fetch(request);
+}
+};
